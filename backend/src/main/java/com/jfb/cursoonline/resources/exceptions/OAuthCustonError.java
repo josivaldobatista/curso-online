@@ -9,7 +9,7 @@ public class OAuthCustonError implements Serializable {
 
   private String error;
 
-  @JsonProperty("Error_description")
+  @JsonProperty("error_description")
   private String errorDescription;
 
   public OAuthCustonError() {

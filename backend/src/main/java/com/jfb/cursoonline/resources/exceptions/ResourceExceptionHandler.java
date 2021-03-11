@@ -5,7 +5,9 @@ import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
 
 import com.jfb.cursoonline.services.exceptions.DatabaseException;
+import com.jfb.cursoonline.services.exceptions.ForbiddenException;
 import com.jfb.cursoonline.services.exceptions.ResourceNotFoundException;
+import com.jfb.cursoonline.services.exceptions.UnauthorizedException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +60,15 @@ public class ResourceExceptionHandler {
     return ResponseEntity.status(status).body(err);
   }
 
+  @ExceptionHandler(ForbiddenException.class)
+  public ResponseEntity<OAuthCustonError> forbidden(ForbiddenException e, HttpServletRequest request) {
+    OAuthCustonError err = new OAuthCustonError("Forbidden", e.getMessage());
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+  }
+
+  @ExceptionHandler(UnauthorizedException.class)
+  public ResponseEntity<OAuthCustonError> unauthorized(UnauthorizedException e, HttpServletRequest request) {
+    OAuthCustonError err = new OAuthCustonError("Unauthorized", e.getMessage());
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
+  }
 }
